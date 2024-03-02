@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import { config } from "dotenv";
 import cors from "cors";
 import pool from "./db_connection";
+import routes from "./routes";
 
 config();
 
@@ -10,7 +11,7 @@ const port: number = parseInt(process.env.PORT!, 10) || 5001;
 
 app.use(cors());
 app.use(express.json());
-
+app.use("/api/", routes);
 
 const start = async () => {
     try {
