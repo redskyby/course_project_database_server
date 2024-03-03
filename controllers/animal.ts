@@ -1,8 +1,5 @@
 class Animal {
-    async addAnimal(){
-
-    }
+    async addAnimal() {}
 }
-
 
 export default new Animal();
