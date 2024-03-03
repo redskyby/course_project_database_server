@@ -4,7 +4,7 @@ use course_project_database;
 
 CREATE TABLE IF NOT EXISTS Animals (
                                        id INT AUTO_INCREMENT PRIMARY KEY,
-                                       name VARCHAR(255),
+                                       name VARCHAR(255) UNIQUE,
     species VARCHAR(255),
     gender VARCHAR(10),
     height DECIMAL(10, 2),
