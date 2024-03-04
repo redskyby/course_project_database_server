@@ -81,7 +81,27 @@ class AnimalController {
             const deleteSql = "DELETE FROM Animals WHERE id = ?";
             await pool.query(deleteSql, [id]);
 
-            res.status(200).json({ message: "Животное удалено"});
+            res.status(200).json({ message: "Животное удалено" });
+        } catch (e: any) {
+            console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
+            res.status(500).json(e.message);
+        }
+    }
+
+    async sortBy(req: Request, res: Response) {
+        try {
+            const { sort } = req.query;
+
+            if (!sort) {
+                return res.status(400).json({ message: "Не указано поле для сортировки" });
+            }
+
+            const sql = `SELECT * FROM Animals ORDER BY ${sort}`;
+
+            const sortedAnimals = await pool.query(sql);
+
+            // Возвращаем отсортированные данные
+            res.status(200).json(sortedAnimals[0]);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
