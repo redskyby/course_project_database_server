@@ -54,6 +54,16 @@ class AnimalController {
             res.status(500).json(e.message);
         }
     }
+
+    async getAllAnimals(req: Request, res: Response) {
+        try {
+            const allAnimals = await pool.query("SELECT * FROM Animals");
+            res.status(200).json(allAnimals[0]);
+        } catch (e: any) {
+            console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
+            res.status(500).json(e.message);
+        }
+    }
 }
 
 export default new AnimalController();
