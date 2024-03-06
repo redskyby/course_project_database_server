@@ -107,6 +107,30 @@ class AnimalController {
             res.status(500).json(e.message);
         }
     }
+
+    async getAnimalById(req: Request, res: Response) {
+        try {
+            const { id } = req.query;
+
+            if (!id) {
+                return res.status(400).json({ message: "Не указано поле для id" });
+            }
+
+            // Выполняем запрос к базе данных для поиска животного по ID
+            const sql = "SELECT * FROM Animals WHERE id = ?";
+            const [animal] = await pool.query(sql, [id]);
+
+            if (!Array.isArray(animal) || animal.length === 0) {
+                return res.status(404).json({ message: "Животное с указанным ID не найдено" });
+            }
+
+            // Возвращаем найденное животное
+            res.status(200).json(animal[0]);
+        } catch (e: any) {
+            console.error(e.message);
+            res.status(500).json(e.message);
+        }
+    }
 }
 
 export default new AnimalController();

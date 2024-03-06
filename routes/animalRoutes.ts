@@ -7,4 +7,5 @@ router.post("/add", animalController.addAnimal);
 router.get("/getAll", animalController.getAllAnimals);
 router.delete("/delete", animalController.deleteAnimal);
 router.get("/sortBy", animalController.sortBy);
+router.get("/getOne", animalController.getAnimalById);
 export default router;
