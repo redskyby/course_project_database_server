@@ -192,7 +192,7 @@ class AnimalController {
                 numOffSpring,
                 idMale,
                 idFemale,
-                id
+                id,
             ];
 
             await pool.query(sql, values);
