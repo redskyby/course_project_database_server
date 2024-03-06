@@ -131,6 +131,78 @@ class AnimalController {
             res.status(500).json(e.message);
         }
     }
+
+    async editAnimalById(req: Request, res: Response) {
+        try {
+            const { id } = req.query;
+
+            if (!id) {
+                return res.status(400).json({ message: "Не указано поле для id" });
+            }
+
+            const {
+                name,
+                species,
+                gender,
+                height,
+                weight,
+                date,
+                age,
+                typeOfFeed,
+                naturalArea,
+                cageNum,
+                offSpring,
+                numOffSpring,
+                idMale,
+                idFemale,
+            } = req.body;
+
+            // Выполняем запрос к базе данных для редактирования животного по ID
+            const sql = `
+                UPDATE Animals
+                SET 
+                    name = ?,
+                    species = ?,
+                    gender = ?,
+                    height = ?,
+                    weight = ?,
+                    date = ?,
+                    age = ?,
+                    typeOfFeed = ?,
+                    naturalArea = ?,
+                    cageNum = ?,
+                    offspring = ?,
+                    numOffSpring = ?,
+                    idMale = ?,
+                    idFemale = ?
+                WHERE id = ?
+            `;
+            const values = [
+                name,
+                species,
+                gender,
+                height,
+                weight,
+                date,
+                age,
+                typeOfFeed,
+                naturalArea,
+                cageNum,
+                offSpring,
+                numOffSpring,
+                idMale,
+                idFemale,
+                id
+            ];
+
+            await pool.query(sql, values);
+
+            res.status(200).json({ message: "Животное успешно отредактировано" });
+        } catch (e: any) {
+            console.error(e.message);
+            res.status(500).json(e.message);
+        }
+    }
 }
 
 export default new AnimalController();
