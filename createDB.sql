@@ -44,6 +44,30 @@ END$$
 
 DELIMITER ;
 
+# Этот триггер будет вызываться перед вставкой новой записи в таблицу Animals. Он проверяет количество животных с тем же типом питания в данной клетке (cageNum). Если найдены животные с другим типом питания, триггер генерирует ошибку, и операция вставки отменяется. Таким образом, в клетке всегда будут животные с одним типом питания.
+
+DELIMITER $$
+
+CREATE TRIGGER check_animal_type_of_feed BEFORE INSERT ON Animals
+    FOR EACH ROW
+BEGIN
+    DECLARE num_animals_same_type INT;
+
+    -- Проверяем количество животных с тем же типом питания в данной клетке
+    SELECT COUNT(*)
+    INTO num_animals_same_type
+    FROM Animals
+    WHERE cageNum = NEW.cageNum AND typeOfFeed <> NEW.typeOfFeed;
+
+    -- Если есть животные с другим типом питания в клетке, генерируем ошибку
+    IF num_animals_same_type > 0 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'В клетке должны быть животные с одним типом питания';
+    END IF;
+END$$
+
+DELIMITER ;
+
 -- Таблица Работники (Employees)
 CREATE TABLE IF NOT EXISTS Employees (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
