@@ -20,6 +20,30 @@ CREATE TABLE IF NOT EXISTS Animals (
     idFemale INT
     );
 
+
+# Этот триггер будет вызываться перед вставкой новой записи в таблицу Animals. Он подсчитывает количество животных в заданной клетке (cageNum). Если количество животных превышает 2, триггер генерирует ошибку, и операция вставки отменяется. Таким образом, в клетке не будет больше двух животных.
+DELIMITER $$
+
+CREATE TRIGGER check_animal_count BEFORE INSERT ON Animals
+    FOR EACH ROW
+BEGIN
+    DECLARE num_animals INT;
+
+    -- Подсчитываем количество животных в заданной клетке
+    SELECT COUNT(*)
+    INTO num_animals
+    FROM Animals
+    WHERE cageNum = NEW.cageNum;
+
+    -- Если количество животных в клетке превышает 2, генерируем ошибку
+    IF num_animals >= 2 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'В клетке не может быть больше двух животных';
+    END IF;
+END$$
+
+DELIMITER ;
+
 -- Таблица Работники (Employees)
 CREATE TABLE IF NOT EXISTS Employees (
                                          id INT AUTO_INCREMENT PRIMARY KEY,
