@@ -66,7 +66,7 @@ class AnimalController {
     }
     async deleteAnimal(req: Request, res: Response) {
         try {
-            const { id } = req.query; // Получаем ID животного из параметра запроса
+            const { id } = req.body; // Получаем ID животного из параметра запроса
 
             // Проверяем наличие записи с заданным ID в таблице
             const checkSql = "SELECT * FROM Animals WHERE id = ?";
@@ -134,13 +134,8 @@ class AnimalController {
 
     async editAnimalById(req: Request, res: Response) {
         try {
-            const { id } = req.query;
-
-            if (!id) {
-                return res.status(400).json({ message: "Не указано поле для id" });
-            }
-
             const {
+                id,
                 name,
                 species,
                 gender,
@@ -156,6 +151,10 @@ class AnimalController {
                 idMale,
                 idFemale,
             } = req.body;
+
+            if (!id) {
+                return res.status(400).json({ message: "Не указано поле для id" });
+            }
 
             // Выполняем запрос к базе данных для редактирования животного по ID
             const sql = `
