@@ -66,7 +66,7 @@ class AnimalController {
     }
     async deleteAnimal(req: Request, res: Response) {
         try {
-            const { id } = req.body; // Получаем ID животного из параметра запроса
+            const { id } = req.query; // Получаем ID животного из параметра запроса
 
             // Проверяем наличие записи с заданным ID в таблице
             const checkSql = "SELECT * FROM Animals WHERE id = ?";
