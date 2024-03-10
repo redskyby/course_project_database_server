@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS Employees (
 -- Таблица Корма (Feed)
 CREATE TABLE IF NOT EXISTS Feed (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
-                                    name VARCHAR(255),
+                                    name VARCHAR(255) UNIQUE,
     nameSupplier VARCHAR(255),
     typeOfFeed VARCHAR(255),
     size VARCHAR(50),
