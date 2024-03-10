@@ -7,5 +7,6 @@ router.post("/add", feedController.addFeed);
 router.get("/getAllFeed", feedController.getAllFeed);
 router.delete("/deleteFeed", feedController.deleteFeed);
 router.get("/sortBy", feedController.sortBy);
+router.put("/editFeedById", feedController.editFeedById);
 
 export default router;

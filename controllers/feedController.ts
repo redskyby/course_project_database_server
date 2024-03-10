@@ -75,6 +75,37 @@ class FeedController {
             res.status(500).json(e.message);
         }
     }
+
+    async editFeedById(req: Request, res: Response) {
+        try {
+            const { id, name, nameSupplier, typeOfFeed, size, price, date } = req.body;
+
+            if (!id) {
+                return res.status(400).json({ message: "Не указано поле для id" });
+            }
+
+            // Выполняем запрос к базе данных для редактирования данных по ID
+            const sql = `
+            UPDATE Feed
+            SET 
+                name = ?,
+                nameSupplier = ?,
+                typeOfFeed = ?,
+                size = ?,
+                price = ?,
+                date = ?
+            WHERE id = ?
+        `;
+            const values = [name, nameSupplier, typeOfFeed, size, price, date, id];
+
+            await pool.query(sql, values);
+
+            res.status(200).json({ message: "Данные успешно отредактированы" });
+        } catch (e: any) {
+            console.error(e.message);
+            res.status(500).json({ error: e.message });
+        }
+    }
 }
 
 export default new FeedController();
