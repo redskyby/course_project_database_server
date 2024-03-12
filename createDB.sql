@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS Feed (
                                     name VARCHAR(255) UNIQUE,
     nameSupplier VARCHAR(255),
     typeOfFeed VARCHAR(255),
-    size VARCHAR(50),
+    size INT,
     price DECIMAL(10, 2),
     date DATE
     );
