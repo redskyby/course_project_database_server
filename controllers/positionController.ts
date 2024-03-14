@@ -23,10 +23,10 @@ class PositionController {
         }
     }
 
-    async getAllFeed(req: Request, res: Response) {
+    async getAllPositions(req: Request, res: Response) {
         try {
-            const allFeed = await pool.query("SELECT * FROM feed");
-            res.status(200).json(allFeed[0]);
+            const allPositions = await pool.query("SELECT * FROM positions");
+            res.status(200).json(allPositions[0]);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
