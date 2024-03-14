@@ -77,9 +77,9 @@ class PositionController {
         }
     }
 
-    async editFeedById(req: Request, res: Response) {
+    async editPositionById(req: Request, res: Response) {
         try {
-            const { id, name, nameSupplier, typeOfFeed, size, price, date } = req.body;
+            const { id, name, salary, access } = req.body;
 
             if (!id) {
                 return res.status(400).json({ message: "Не указано поле для id" });
@@ -87,17 +87,14 @@ class PositionController {
 
             // Выполняем запрос к базе данных для редактирования данных по ID
             const sql = `
-            UPDATE Feed
+            UPDATE positions
             SET 
                 name = ?,
-                nameSupplier = ?,
-                typeOfFeed = ?,
-                size = ?,
-                price = ?,
-                date = ?
+                salary = ?,
+                access = ?
             WHERE id = ?
         `;
-            const values = [name, nameSupplier, typeOfFeed, size, price, date, id];
+            const values = [name, salary, access, id];
 
             await pool.query(sql, values);
 
