@@ -33,24 +33,24 @@ class PositionController {
         }
     }
 
-    async deleteFeed(req: Request, res: Response) {
+    async deletePosition(req: Request, res: Response) {
         try {
             const { id } = req.query; // Получаем ID корма из параметра запроса
 
             // Проверяем наличие записи с заданным ID в таблице
-            const checkSql = "SELECT * FROM feed WHERE id = ?";
+            const checkSql = "SELECT * FROM positions WHERE id = ?";
             const [checkResult] = await pool.query(checkSql, [id]);
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
                 // Если запись с заданным ID не найдена, возвращаем сообщение об ошибке
-                return res.status(404).json({ message: "Корм с указанным ID не найден" });
+                return res.status(404).json({ message: "Позиция с указанным ID не найден" });
             }
 
             // Если запись с заданным ID найдена, выполняем операцию удаления
-            const deleteSql = "DELETE FROM feed WHERE id = ?";
+            const deleteSql = "DELETE FROM positions WHERE id = ?";
             await pool.query(deleteSql, [id]);
 
-            res.status(200).json({ message: "Корм удален" });
+            res.status(200).json({ message: "Позиция удалена" });
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
