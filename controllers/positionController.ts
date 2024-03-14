@@ -4,7 +4,7 @@ import pool from "../db_connection";
 class PositionController {
     async addPosition(req: Request, res: Response) {
         try {
-            const { name, salary , access } = req.body;
+            const { name, salary, access } = req.body;
 
             const sql = `
                 INSERT INTO positions
@@ -12,7 +12,7 @@ class PositionController {
                 VALUES (?, ?, ?)
             `;
 
-            const values = [name, salary , access ];
+            const values = [name, salary, access];
 
             const result = await pool.query(sql, values);
 
