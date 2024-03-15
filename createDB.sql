@@ -2,29 +2,32 @@
 create database course_project_database;
 use course_project_database;
 
-CREATE TABLE IF NOT EXISTS Animals (
-                                       id INT AUTO_INCREMENT PRIMARY KEY,
-                                       name VARCHAR(255) UNIQUE,
-    species VARCHAR(255),
-    gender VARCHAR(10),
-    height DECIMAL(10, 2),
-    weight DECIMAL(10, 2),
-    date DATE,
-    age INT,
-    typeOfFeed VARCHAR(255),
-    naturalArea VARCHAR(255),
-    cageNum INT,
-    offspring BOOLEAN,
+CREATE TABLE IF NOT EXISTS Animals
+(
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    name         VARCHAR(255) UNIQUE,
+    species      VARCHAR(255),
+    gender       VARCHAR(10),
+    height       DECIMAL(10, 2),
+    weight       DECIMAL(10, 2),
+    date         DATE,
+    age          INT,
+    typeOfFeed   VARCHAR(255),
+    naturalArea  VARCHAR(255),
+    cageNum      INT,
+    offspring    BOOLEAN,
     numOffspring INT,
-    idMale INT,
-    idFemale INT
-    );
+    idMale       INT,
+    idFemale     INT
+);
 
 
 # Этот триггер будет вызываться перед вставкой новой записи в таблицу Animals. Он подсчитывает количество животных в заданной клетке (cageNum). Если количество животных превышает 2, триггер генерирует ошибку, и операция вставки отменяется. Таким образом, в клетке не будет больше двух животных.
 DELIMITER $$
 
-CREATE TRIGGER check_animal_count BEFORE INSERT ON Animals
+CREATE TRIGGER check_animal_count
+    BEFORE INSERT
+    ON Animals
     FOR EACH ROW
 BEGIN
     DECLARE num_animals INT;
@@ -48,7 +51,9 @@ DELIMITER ;
 
 DELIMITER $$
 
-CREATE TRIGGER check_animal_type_of_feed BEFORE INSERT ON Animals
+CREATE TRIGGER check_animal_type_of_feed
+    BEFORE INSERT
+    ON Animals
     FOR EACH ROW
 BEGIN
     DECLARE num_animals_same_type INT;
@@ -57,7 +62,8 @@ BEGIN
     SELECT COUNT(*)
     INTO num_animals_same_type
     FROM Animals
-    WHERE cageNum = NEW.cageNum AND typeOfFeed <> NEW.typeOfFeed;
+    WHERE cageNum = NEW.cageNum
+      AND typeOfFeed <> NEW.typeOfFeed;
 
     -- Если есть животные с другим типом питания в клетке, генерируем ошибку
     IF num_animals_same_type > 0 THEN
@@ -69,70 +75,77 @@ END$$
 DELIMITER ;
 
 -- Таблица Работники (Employees)
-CREATE TABLE IF NOT EXISTS Employees (
-                                         id INT AUTO_INCREMENT PRIMARY KEY,
-                                         name VARCHAR(255),
-    surname VARCHAR(255),
-    gender VARCHAR(10),
+CREATE TABLE IF NOT EXISTS Employees
+(
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    name       VARCHAR(255),
+    surname    VARCHAR(255),
+    gender     VARCHAR(10),
     idPosition INT,
-    date DATE,
-    age INT,
-    FOREIGN KEY (idPosition) REFERENCES Positions(id)
-    );
+    date       DATE,
+    age        INT,
+    FOREIGN KEY (idPosition) REFERENCES Positions (id)
+);
 
 -- Таблица Корма (Feed)
-CREATE TABLE IF NOT EXISTS Feed (
-                                    id INT AUTO_INCREMENT PRIMARY KEY,
-                                    name VARCHAR(255) UNIQUE,
+CREATE TABLE IF NOT EXISTS Feed
+(
+    id           INT AUTO_INCREMENT PRIMARY KEY,
+    name         VARCHAR(255) UNIQUE,
     nameSupplier VARCHAR(255),
-    typeOfFeed VARCHAR(255),
-    size INT,
-    price DECIMAL(10, 2),
-    date DATE
-    );
+    typeOfFeed   VARCHAR(255),
+    size         INT,
+    price        DECIMAL(10, 2),
+    date         DATE
+);
 
 -- Таблица Болезни (Illnesses)
-CREATE TABLE IF NOT EXISTS Illnesses (
-    name VARCHAR(255),
+CREATE TABLE IF NOT EXISTS Illnesses
+(
+    name     VARCHAR(255),
     idAnimal INT,
-    date DATE,
+    date     DATE,
     PRIMARY KEY (name, idAnimal),
-    FOREIGN KEY (idAnimal) REFERENCES Animals(id)
-    );
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+);
 
 -- Таблица Должности (Positions)
-CREATE TABLE IF NOT EXISTS Positions (
-                                         id INT AUTO_INCREMENT PRIMARY KEY,
-                                         name VARCHAR(255),
+CREATE TABLE IF NOT EXISTS Positions
+(
+    id     INT AUTO_INCREMENT PRIMARY KEY,
+    name   VARCHAR(255),
     salary DECIMAL(10, 2),
     access BOOLEAN
-    );
+);
 
 -- Таблица Вакцинации (Vaccination)
-CREATE TABLE IF NOT EXISTS Vaccination (
-    name VARCHAR(255),
+CREATE TABLE IF NOT EXISTS Vaccination
+(
+    name     VARCHAR(255),
     idAnimal INT,
-    date DATE,
+    date     DATE,
     PRIMARY KEY (name, idAnimal),
-    FOREIGN KEY (idAnimal) REFERENCES Animals(id)
-    );
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+);
 
 -- Таблица Работа с животными (WorkWithAnimals)
-CREATE TABLE IF NOT EXISTS WorkWithAnimals (
-                                               idPosition INT,
-                                               idAnimal INT,
-                                               dateFrom DATE,
-                                               dateTo DATE,
-                                               PRIMARY KEY (idPosition, idAnimal, dateFrom),
-    FOREIGN KEY (idPosition) REFERENCES Positions(id),
-    FOREIGN KEY (idAnimal) REFERENCES Animals(id)
-    );
+CREATE TABLE IF NOT EXISTS WorkWithAnimals
+(
+    idPosition INT,
+    idAnimal   INT,
+    dateFrom   DATE,
+    dateTo     DATE,
+    PRIMARY KEY (idPosition, idAnimal, dateFrom),
+    FOREIGN KEY (idPosition) REFERENCES Positions (id),
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+);
 
 -- Таблица Зоопарки (Zoos)
-CREATE TABLE IF NOT EXISTS Zoos (
-                                    id INT AUTO_INCREMENT PRIMARY KEY,
-                                    idAnimal INT,
-                                    name VARCHAR(255),
-    date DATE,
-    FOREIGN KEY (idAnimal) REFERENCES Animals(id)
-    );
+CREATE TABLE IF NOT EXISTS Zoos
+(
+    id       INT AUTO_INCREMENT PRIMARY KEY,
+    idAnimal INT,
+    name     VARCHAR(255),
+    date     DATE,
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+);
