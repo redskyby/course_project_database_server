@@ -23,9 +23,9 @@ class VaccinationController {
         }
     }
 
-    async getAllPositions(req: Request, res: Response) {
+    async getAllVaccinations(req: Request, res: Response) {
         try {
-            const allPositions = await pool.query("SELECT * FROM positions");
+            const allPositions = await pool.query("SELECT * FROM vaccination");
             res.status(200).json(allPositions[0]);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
