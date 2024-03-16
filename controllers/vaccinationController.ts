@@ -35,20 +35,20 @@ class VaccinationController {
 
     async deleteVaccination(req: Request, res: Response) {
         try {
-            const { id } = req.query; // Получаем ID корма из параметра запроса
+            const { date, idAnimal } = req.body; // Получаем ID вакцины из параметра запроса
 
             // Проверяем наличие записи с заданным ID в таблице
-            const checkSql = "SELECT * FROM vaccination WHERE idAnimal = ?";
-            const [checkResult] = await pool.query(checkSql, [id]);
+            const checkSql = "SELECT * FROM vaccination WHERE idAnimal = ? AND date = ?";
+            const [checkResult] = await pool.query(checkSql, [idAnimal, date]);
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
                 // Если запись с заданным ID не найдена, возвращаем сообщение об ошибке
-                return res.status(404).json({ message: "Вакцинация с указанным ID не найдена" });
+                return res.status(404).json({ message: "Вакцинация с указанным ID или датой не найдена" });
             }
 
             // Если запись с заданным ID найдена, выполняем операцию удаления
-            const deleteSql = "DELETE FROM vaccination WHERE idAnimal = ?";
-            await pool.query(deleteSql, [id]);
+            const deleteSql = "DELETE FROM vaccination WHERE idAnimal = ? AND date = ?";
+            await pool.query(deleteSql, [idAnimal, date]);
 
             res.status(200).json({ message: "Запись о вакцинации удалена" });
         } catch (e: any) {
