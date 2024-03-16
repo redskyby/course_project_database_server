@@ -77,24 +77,23 @@ class VaccinationController {
         }
     }
 
-    async editPositionById(req: Request, res: Response) {
+    async editVaccinationById(req: Request, res: Response) {
         try {
-            const { id, name, salary, access } = req.body;
+            const { date, name, idAnimal } = req.body;
 
-            if (!id) {
+            if (!idAnimal) {
                 return res.status(400).json({ message: "Не указано поле для id" });
             }
 
             // Выполняем запрос к базе данных для редактирования данных по ID
             const sql = `
-            UPDATE positions
-            SET 
-                name = ?,
-                salary = ?,
-                access = ?
-            WHERE id = ?
+            UPDATE vaccination
+            SET
+                date = ?,
+                name = ?
+            WHERE idAnimal = ?
         `;
-            const values = [name, salary, access, id];
+            const values = [date, name, idAnimal];
 
             await pool.query(sql, values);
 
