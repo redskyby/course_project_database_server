@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import pool from "../db_connection";
 
 class VaccinationController {
@@ -33,24 +33,24 @@ class VaccinationController {
         }
     }
 
-    async deletePosition(req: Request, res: Response) {
+    async deleteVaccination(req: Request, res: Response) {
         try {
             const { id } = req.query; // Получаем ID корма из параметра запроса
 
             // Проверяем наличие записи с заданным ID в таблице
-            const checkSql = "SELECT * FROM positions WHERE id = ?";
+            const checkSql = "SELECT * FROM vaccination WHERE idAnimal = ?";
             const [checkResult] = await pool.query(checkSql, [id]);
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
                 // Если запись с заданным ID не найдена, возвращаем сообщение об ошибке
-                return res.status(404).json({ message: "Позиция с указанным ID не найден" });
+                return res.status(404).json({ message: "Вакцинация с указанным ID не найдена" });
             }
 
             // Если запись с заданным ID найдена, выполняем операцию удаления
-            const deleteSql = "DELETE FROM positions WHERE id = ?";
+            const deleteSql = "DELETE FROM vaccination WHERE idAnimal = ?";
             await pool.query(deleteSql, [id]);
 
-            res.status(200).json({ message: "Позиция удалена" });
+            res.status(200).json({ message: "Запись о вакцинации удалена" });
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
@@ -65,12 +65,12 @@ class VaccinationController {
                 return res.status(400).json({ message: "Не указано поле для сортировки" });
             }
 
-            const sql = `SELECT * FROM positions ORDER BY ${sort}`;
+            const sql = `SELECT * FROM vaccination ORDER BY ${sort}`;
 
-            const sortedPositions = await pool.query(sql);
+            const sortedVaccinations = await pool.query(sql);
 
             // Возвращаем отсортированные данные
-            res.status(200).json(sortedPositions[0]);
+            res.status(200).json(sortedVaccinations[0]);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
