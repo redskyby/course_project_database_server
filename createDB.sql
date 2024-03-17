@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS Positions
 CREATE TABLE IF NOT EXISTS Vaccination
 (
     name     VARCHAR(255),
-    idAnimal INT,
+    idAnimal INT UNIQUE,
     date     DATE,
     PRIMARY KEY (name, idAnimal),
     FOREIGN KEY (idAnimal) REFERENCES Animals (id)
