@@ -10,6 +10,6 @@ router.use("/animal", animalRoutes);
 router.use("/feed", feedRoutes);
 router.use("/position", positionRoutes);
 router.use("/vaccination", vaccinationRoutes);
-router.use("/illnesses" , illnessesRoutes);
+router.use("/illnesses", illnessesRoutes);
 
 export default router;
