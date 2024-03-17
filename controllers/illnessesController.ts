@@ -33,7 +33,7 @@ class IllnessesController {
         }
     }
 
-    async deleteIllIllnesses(req: Request, res: Response) {
+    async deleteIllIllness(req: Request, res: Response) {
         try {
             const { date, idAnimal } = req.body; // Получаем ID болезни из параметра запроса
 
@@ -77,7 +77,7 @@ class IllnessesController {
         }
     }
 
-    async editIllnessesById(req: Request, res: Response) {
+    async editIllnessById(req: Request, res: Response) {
         try {
             const { date, name, idAnimal } = req.body;
 
