@@ -144,8 +144,8 @@ CREATE TABLE IF NOT EXISTS WorkWithAnimals
 CREATE TABLE IF NOT EXISTS Zoos
 (
     id       INT AUTO_INCREMENT PRIMARY KEY,
-    idAnimal INT,
-    name     VARCHAR(255),
+    name     VARCHAR(255) UNIQUE,
+    idAnimal INT UNIQUE,
     date     DATE,
     FOREIGN KEY (idAnimal) REFERENCES Animals (id)
 );
