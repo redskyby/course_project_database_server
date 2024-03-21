@@ -77,7 +77,7 @@ class ZoosController {
         }
     }
 
-    async editVaccinationById(req: Request, res: Response) {
+    async editZooById(req: Request, res: Response) {
         try {
             const { date, name, idAnimal } = req.body;
 
@@ -85,7 +85,7 @@ class ZoosController {
                 return res.status(400).json({ message: "Не указано поле для id или дата" });
             }
 
-            const checkSql = "SELECT * FROM vaccination WHERE idAnimal = ? AND date = ?";
+            const checkSql = "SELECT * FROM zoos WHERE idAnimal = ? AND date = ?";
             const [checkResult] = await pool.query(checkSql, [idAnimal, date]);
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
@@ -95,7 +95,7 @@ class ZoosController {
 
             // Выполняем запрос к базе данных для редактирования данных по ID
             const sql = `
-            UPDATE vaccination
+            UPDATE zoos
             SET
                 date = ?,
                 name = ?
