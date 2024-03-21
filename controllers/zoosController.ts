@@ -25,7 +25,7 @@ class ZoosController {
 
     async getAllZoos(req: Request, res: Response) {
         try {
-            const allPositions = await pool.query("SELECT * FROM vaccination");
+            const allPositions = await pool.query("SELECT * FROM zoos");
             res.status(200).json(allPositions[0]);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
