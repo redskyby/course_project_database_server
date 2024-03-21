@@ -1,11 +1,12 @@
 import { Router } from "express";
-import vaccinationController from "../controllers/vaccinationController";
+import zoosController from "../controllers/zoosController";
+
 
 const router = Router();
 
-router.post("/add", vaccinationController.addVaccination);
-router.get("/getAllZoos", vaccinationController.getAllVaccinations);
-router.delete("/deleteZoo", vaccinationController.deleteVaccination);
-router.get("/sortBy", vaccinationController.sortBy);
-router.put("/editVaccinationById", vaccinationController.editVaccinationById);
+router.post("/add", zoosController.addZoo);
+router.get("/getAllZoos", zoosController.getAllVaccinations);
+router.delete("/deleteZoo", zoosController.deleteVaccination);
+router.get("/sortBy", zoosController.sortBy);
+router.put("/editVaccinationById", zoosController.editVaccinationById);
 export default router;
