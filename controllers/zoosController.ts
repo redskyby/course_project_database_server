@@ -33,12 +33,12 @@ class ZoosController {
         }
     }
 
-    async deleteVaccination(req: Request, res: Response) {
+    async deleteZoo(req: Request, res: Response) {
         try {
             const { date, idAnimal } = req.body; // Получаем ID вакцины из параметра запроса
 
             // Проверяем наличие записи с заданным ID в таблице
-            const checkSql = "SELECT * FROM vaccination WHERE idAnimal = ? AND date = ?";
+            const checkSql = "SELECT * FROM zoos WHERE idAnimal = ? AND date = ?";
             const [checkResult] = await pool.query(checkSql, [idAnimal, date]);
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
@@ -47,7 +47,7 @@ class ZoosController {
             }
 
             // Если запись с заданным ID найдена, выполняем операцию удаления
-            const deleteSql = "DELETE FROM vaccination WHERE idAnimal = ? AND date = ?";
+            const deleteSql = "DELETE FROM zoos WHERE idAnimal = ? AND date = ?";
             await pool.query(deleteSql, [idAnimal, date]);
 
             res.status(200).json({ message: "Запись о вакцинации удалена" });
