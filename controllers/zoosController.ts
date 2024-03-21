@@ -23,7 +23,7 @@ class ZoosController {
         }
     }
 
-    async getAllVaccinations(req: Request, res: Response) {
+    async getAllZoos(req: Request, res: Response) {
         try {
             const allPositions = await pool.query("SELECT * FROM vaccination");
             res.status(200).json(allPositions[0]);
