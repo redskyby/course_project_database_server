@@ -7,7 +7,7 @@ class ZoosController {
             const { date, name, idAnimal } = req.body;
 
             const sql = `
-                INSERT INTO vaccination
+                INSERT INTO zoos
                 (date, name , idAnimal)
                 VALUES (?, ?, ?)
             `;

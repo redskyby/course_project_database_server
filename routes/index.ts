@@ -12,6 +12,6 @@ router.use("/feed", feedRoutes);
 router.use("/position", positionRoutes);
 router.use("/vaccination", vaccinationRoutes);
 router.use("/illnesses", illnessesRoutes);
-router.use("/zoo", zoosRoutes);
+router.use("/zoos", zoosRoutes);
 
 export default router;
