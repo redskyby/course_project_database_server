@@ -1,7 +1,6 @@
 import { Router } from "express";
 import zoosController from "../controllers/zoosController";
 
-
 const router = Router();
 
 router.post("/add", zoosController.addZoo);
