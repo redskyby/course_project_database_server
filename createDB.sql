@@ -128,14 +128,39 @@ CREATE TABLE IF NOT EXISTS Vaccination
     FOREIGN KEY (idAnimal) REFERENCES Animals (id)
 );
 
+# Для создания внешнего ключа MySQL требует, чтобы столбец, на который ссылается внешний ключ, был проиндексирован. Поэтому нужно добавить индекс к столбцу 'date' в таблице 'Animals'.
+CREATE INDEX idx_date ON Animals (date);
+
+# пример создания триггера для вашей таблицы WorkWithAnimals, который будет проверять, чтобы idDate была больше dateFrom и dateFrom было больше dateTo:
+DELIMITER //
+
+CREATE TRIGGER CheckDatesBeforeInsert
+    BEFORE INSERT ON WorkWithAnimals
+    FOR EACH ROW
+BEGIN
+    IF NEW.idDate <= NEW.dateFrom THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'idDate must be greater than dateFrom';
+    END IF;
+
+    IF NEW.dateFrom >= NEW.dateTo THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'dateFrom must be less than dateTo';
+    END IF;
+END//
+
+DELIMITER ;
+
 -- Таблица Работа с животными (WorkWithAnimals)
 CREATE TABLE IF NOT EXISTS WorkWithAnimals
 (
     id     INT AUTO_INCREMENT PRIMARY KEY,
+    idDate DATE,
     idPosition INT,
     idAnimal   INT,
     dateFrom   DATE,
     dateTo     DATE,
+    FOREIGN KEY (idDate) REFERENCES Animals (date),
     FOREIGN KEY (idPosition) REFERENCES Positions (id),
     FOREIGN KEY (idAnimal) REFERENCES Animals (id)
 );
