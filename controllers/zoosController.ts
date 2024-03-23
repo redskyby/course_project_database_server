@@ -43,14 +43,14 @@ class ZoosController {
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
                 // Если запись с заданным ID не найдена, возвращаем сообщение об ошибке
-                return res.status(404).json({ message: "Вакцинация с указанным ID или датой не найдена" });
+                return res.status(404).json({ message: "Зоопарк с указанным ID или датой не найден" });
             }
 
             // Если запись с заданным ID найдена, выполняем операцию удаления
             const deleteSql = "DELETE FROM zoos WHERE idAnimal = ? AND date = ?";
             await pool.query(deleteSql, [idAnimal, date]);
 
-            res.status(200).json({ message: "Запись о вакцинации удалена" });
+            res.status(200).json({ message: "Запись о зоопарке удалена" });
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
@@ -90,7 +90,7 @@ class ZoosController {
 
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
                 // Если запись с заданным ID не найдена, возвращаем сообщение об ошибке
-                return res.status(404).json({ message: "Вакцинация с указанным ID или датой не найдена" });
+                return res.status(404).json({ message: "Зоопарк с указанным ID или датой не найден" });
             }
 
             // Выполняем запрос к базе данных для редактирования данных по ID
