@@ -131,11 +131,11 @@ CREATE TABLE IF NOT EXISTS Vaccination
 -- Таблица Работа с животными (WorkWithAnimals)
 CREATE TABLE IF NOT EXISTS WorkWithAnimals
 (
+    id     INT AUTO_INCREMENT PRIMARY KEY,
     idPosition INT,
     idAnimal   INT,
     dateFrom   DATE,
     dateTo     DATE,
-    PRIMARY KEY (idPosition, idAnimal, dateFrom),
     FOREIGN KEY (idPosition) REFERENCES Positions (id),
     FOREIGN KEY (idAnimal) REFERENCES Animals (id)
 );

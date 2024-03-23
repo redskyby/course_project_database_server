@@ -7,5 +7,5 @@ router.post("/add", workWithAnimalsController.addWorkWithAnimal);
 router.get("/getAllWorkWithAnimals", workWithAnimalsController.getAllWorkWithAnimal);
 router.delete("/deleteWorkWithAnimals", workWithAnimalsController.deleteWorkWithAnimals);
 router.get("/sortBy", workWithAnimalsController.sortBy);
-router.put("/editWorkWithAnimalsById", workWithAnimalsController.editZooById);
+router.put("/editWorkWithAnimalsById", workWithAnimalsController.editWorkWithAnimalById);
 export default router;
