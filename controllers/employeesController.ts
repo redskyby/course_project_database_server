@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import pool from "../db_connection";
 
 class EmployeesController {
@@ -204,4 +204,4 @@ class EmployeesController {
     }
 }
 
-export default new EmployeesController()
+export default new EmployeesController();

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import employeesController from "../controllers/employeesController";
 
-
 const router = Router();
 
 router.post("/add", employeesController.addAnimal);
