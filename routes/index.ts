@@ -6,6 +6,7 @@ import vaccinationRoutes from "./vaccinationRoutes";
 import illnessesRoutes from "./illnessesRoutes";
 import zoosRoutes from "./zoosRoutes";
 import workWithAnimalsRoutes from "./workWithAnimalsRoutes";
+import employeesRoutes from "./employeesRoutes";
 const router = Router();
 
 router.use("/animal", animalRoutes);
@@ -15,5 +16,6 @@ router.use("/vaccination", vaccinationRoutes);
 router.use("/illnesses", illnessesRoutes);
 router.use("/zoos", zoosRoutes);
 router.use("/workWithAnimals", workWithAnimalsRoutes);
+router.use("/employees", employeesRoutes);
 
 export default router;
