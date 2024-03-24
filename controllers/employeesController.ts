@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import pool from "../db_connection";
 
 class EmployeesController {
-    async addAnimal(req: Request, res: Response) {
+    async addEmployee(req: Request, res: Response) {
         try {
             const {
                 name,
