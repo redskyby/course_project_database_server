@@ -1,12 +1,13 @@
 import { Router } from "express";
-import animalController from "../controllers/animalController";
+import employeesController from "../controllers/employeesController";
+
 
 const router = Router();
 
-router.post("/add", animalController.addAnimal);
-router.get("/getAll", animalController.getAllAnimals);
-router.delete("/delete", animalController.deleteAnimal);
-router.get("/sortBy", animalController.sortBy);
-router.get("/getOne", animalController.getAnimalById);
-router.put("/editAnimalById", animalController.editAnimalById);
+router.post("/add", employeesController.addAnimal);
+router.get("/getAll", employeesController.getAllAnimals);
+router.delete("/delete", employeesController.deleteAnimal);
+router.get("/sortBy", employeesController.sortBy);
+router.get("/getOne", employeesController.getAnimalById);
+router.put("/editEmployeeById", employeesController.editAnimalById);
 export default router;
