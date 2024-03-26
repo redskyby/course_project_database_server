@@ -6,42 +6,31 @@ class EmployeesController {
         try {
             const {
                 name,
-                species,
+                surname,
                 gender,
-                height,
-                weight,
+                idPosition,
                 date,
                 age,
-                typeOfFeed,
-                naturalArea,
-                cageNum,
-                offspring,
-                numOffSpring,
-                idMale = null,
-                idFemale = null,
             } = req.body;
 
             const sql = `
-                INSERT INTO Animals
-                (name, species, gender, height, weight, date, age ,  typeOfFeed, naturalArea, cageNum, offspring, numOffSpring, idMale, idFemale)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?)
+                INSERT INTO employees
+                ( name,
+                  surname,
+                  gender,
+                  idPosition,
+                  date,
+                  age)
+                VALUES (?, ?, ?, ?, ?, ?)
             `;
 
             const values = [
                 name,
-                species,
+                surname,
                 gender,
-                height,
-                weight,
+                idPosition,
                 date,
-                age,
-                typeOfFeed,
-                naturalArea,
-                cageNum,
-                offspring,
-                numOffSpring,
-                idMale,
-                idFemale,
+                age
             ];
 
             const result = await pool.query(sql, values);
