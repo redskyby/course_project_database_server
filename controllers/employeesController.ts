@@ -115,6 +115,13 @@ class EmployeesController {
                 return res.status(400).json({ message: "Не указано поле для id" });
             }
 
+            const sqlCheck = "SELECT * FROM employees WHERE id = ?";
+            const [employee] = await pool.query(sqlCheck, [id]);
+
+            if (!Array.isArray(employee) || employee.length === 0) {
+                return res.status(404).json({ message: "Работник с указанным ID не найден" });
+            }
+
             // Выполняем запрос к базе данных для редактирования животного по ID
             const sql = `
                 UPDATE employees
