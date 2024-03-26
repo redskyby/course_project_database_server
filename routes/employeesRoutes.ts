@@ -4,7 +4,7 @@ import employeesController from "../controllers/employeesController";
 const router = Router();
 
 router.post("/add", employeesController.addEmployee);
-router.get("/getAll", employeesController.getAllAnimals);
+router.get("/getAll", employeesController.getAllEmployees);
 router.delete("/delete", employeesController.deleteAnimal);
 router.get("/sortBy", employeesController.sortBy);
 router.get("/getOne", employeesController.getAnimalById);
