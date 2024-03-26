@@ -4,14 +4,7 @@ import pool from "../db_connection";
 class EmployeesController {
     async addEmployee(req: Request, res: Response) {
         try {
-            const {
-                name,
-                surname,
-                gender,
-                idPosition,
-                date,
-                age,
-            } = req.body;
+            const { name, surname, gender, idPosition, date, age } = req.body;
 
             const sql = `
                 INSERT INTO employees
@@ -24,14 +17,7 @@ class EmployeesController {
                 VALUES (?, ?, ?, ?, ?, ?)
             `;
 
-            const values = [
-                name,
-                surname,
-                gender,
-                idPosition,
-                date,
-                age
-            ];
+            const values = [name, surname, gender, idPosition, date, age];
 
             const result = await pool.query(sql, values);
             // // @ts-ignore
@@ -123,15 +109,7 @@ class EmployeesController {
 
     async editEmployeeById(req: Request, res: Response) {
         try {
-                const {
-                    id,
-                    name,
-                    surname,
-                    gender,
-                    idPosition,
-                    date,
-                    age,
-                } = req.body;
+            const { id, name, surname, gender, idPosition, date, age } = req.body;
 
             if (!id) {
                 return res.status(400).json({ message: "Не указано поле для id" });
@@ -149,15 +127,7 @@ class EmployeesController {
                     age = ?
                 WHERE id = ?
             `;
-            const values = [
-                name,
-                surname,
-                gender,
-                idPosition,
-                date,
-                age,
-                id
-            ];
+            const values = [name, surname, gender, idPosition, date, age, id];
 
             await pool.query(sql, values);
 
