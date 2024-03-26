@@ -97,7 +97,7 @@ class EmployeesController {
         }
     }
 
-    async getAnimalById(req: Request, res: Response) {
+    async getEmployeeById(req: Request, res: Response) {
         try {
             const { id } = req.query;
 
@@ -106,11 +106,11 @@ class EmployeesController {
             }
 
             // Выполняем запрос к базе данных для поиска животного по ID
-            const sql = "SELECT * FROM Animals WHERE id = ?";
+            const sql = "SELECT * FROM employees WHERE id = ?";
             const [animal] = await pool.query(sql, [id]);
 
             if (!Array.isArray(animal) || animal.length === 0) {
-                return res.status(404).json({ message: "Животное с указанным ID не найдено" });
+                return res.status(404).json({ message: "Работник с указанным ID не найден" });
             }
 
             // Возвращаем найденное животное
