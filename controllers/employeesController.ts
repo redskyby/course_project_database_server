@@ -107,39 +107,31 @@ class EmployeesController {
 
             // Выполняем запрос к базе данных для поиска животного по ID
             const sql = "SELECT * FROM employees WHERE id = ?";
-            const [animal] = await pool.query(sql, [id]);
+            const [employee] = await pool.query(sql, [id]);
 
-            if (!Array.isArray(animal) || animal.length === 0) {
+            if (!Array.isArray(employee) || employee.length === 0) {
                 return res.status(404).json({ message: "Работник с указанным ID не найден" });
             }
 
             // Возвращаем найденное животное
-            res.status(200).json(animal[0]);
+            res.status(200).json(employee[0]);
         } catch (e: any) {
             console.error(e.message);
             res.status(500).json(e.message);
         }
     }
 
-    async editAnimalById(req: Request, res: Response) {
+    async editEmployeeById(req: Request, res: Response) {
         try {
-            const {
-                id,
-                name,
-                species,
-                gender,
-                height,
-                weight,
-                date,
-                age,
-                typeOfFeed,
-                naturalArea,
-                cageNum,
-                offSpring,
-                numOffSpring,
-                idMale,
-                idFemale,
-            } = req.body;
+                const {
+                    id,
+                    name,
+                    surname,
+                    gender,
+                    idPosition,
+                    date,
+                    age,
+                } = req.body;
 
             if (!id) {
                 return res.status(400).json({ message: "Не указано поле для id" });
@@ -147,40 +139,24 @@ class EmployeesController {
 
             // Выполняем запрос к базе данных для редактирования животного по ID
             const sql = `
-                UPDATE Animals
+                UPDATE employees
                 SET 
                     name = ?,
-                    species = ?,
+                    surname = ?,
                     gender = ?,
-                    height = ?,
-                    weight = ?,
+                    idPosition = ?,
                     date = ?,
-                    age = ?,
-                    typeOfFeed = ?,
-                    naturalArea = ?,
-                    cageNum = ?,
-                    offspring = ?,
-                    numOffSpring = ?,
-                    idMale = ?,
-                    idFemale = ?
+                    age = ?
                 WHERE id = ?
             `;
             const values = [
                 name,
-                species,
+                surname,
                 gender,
-                height,
-                weight,
+                idPosition,
                 date,
                 age,
-                typeOfFeed,
-                naturalArea,
-                cageNum,
-                offSpring,
-                numOffSpring,
-                idMale,
-                idFemale,
-                id,
+                id
             ];
 
             await pool.query(sql, values);
