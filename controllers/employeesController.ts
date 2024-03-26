@@ -85,12 +85,12 @@ class EmployeesController {
                 return res.status(400).json({ message: "Не указано поле для сортировки" });
             }
 
-            const sql = `SELECT * FROM Animals ORDER BY ${sort}`;
+            const sql = `SELECT * FROM employees ORDER BY ${sort}`;
 
-            const sortedAnimals = await pool.query(sql);
+            const sortedEmployees = await pool.query(sql);
 
             // Возвращаем отсортированные данные
-            res.status(200).json(sortedAnimals[0]);
+            res.status(200).json(sortedEmployees[0]);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
