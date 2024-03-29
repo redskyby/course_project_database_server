@@ -101,7 +101,7 @@ class PositionController {
             res.status(200).json({ message: "Данные успешно отредактированы" });
         } catch (e: any) {
             console.error(e.message);
-            res.status(500).json({ error: e.message });
+            res.status(500).json(e.message);
         }
     }
 }
