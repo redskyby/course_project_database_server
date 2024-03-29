@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS Employees
     idPosition INT,
     date       DATE,
     age        INT,
-    FOREIGN KEY (idPosition) REFERENCES Positions (id)
+    FOREIGN KEY (idPosition) REFERENCES Positions (id)  ON DELETE CASCADE
 );
 
 -- Таблица Корма (Feed)
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS Illnesses
     idAnimal INT,
     date     DATE,
     PRIMARY KEY (name, idAnimal),
-    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id) ON DELETE CASCADE
 );
 
 -- Таблица Должности (Positions)
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS Vaccination
     idAnimal INT UNIQUE,
     date     DATE,
     PRIMARY KEY (name, idAnimal),
-    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id) ON DELETE CASCADE
 );
 
 # пример создания триггера для вашей таблицы WorkWithAnimals, который будет проверять, чтобы idDate была больше dateFrom и dateFrom было больше dateTo:
@@ -151,8 +151,8 @@ CREATE TABLE IF NOT EXISTS WorkWithAnimals
     idAnimal   INT,
     dateFrom   DATE,
     dateTo     DATE,
-    FOREIGN KEY (idPosition) REFERENCES Positions (id),
-    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+    FOREIGN KEY (idPosition) REFERENCES Positions (id) ON DELETE CASCADE,
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id) ON DELETE CASCADE
 );
 
 -- Таблица Зоопарки (Zoos)
@@ -162,5 +162,5 @@ CREATE TABLE IF NOT EXISTS Zoos
     name     VARCHAR(255) UNIQUE,
     idAnimal INT UNIQUE,
     date     DATE,
-    FOREIGN KEY (idAnimal) REFERENCES Animals (id)
+    FOREIGN KEY (idAnimal) REFERENCES Animals (id) ON DELETE CASCADE
 );
