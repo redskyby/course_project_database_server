@@ -6,6 +6,22 @@ class WorkWithAnimalsController {
         try {
             const { idPosition, idAnimal, dateFrom, dateTo } = req.body;
 
+            const checkSql = "SELECT id FROM animals WHERE id = ?";
+            const [animal] = await pool.query(checkSql, [idAnimal]);
+
+            if (!animal) {
+                return res.status(404).json({ message: "Животное с указанным идентификатором не найдено." });
+            }
+
+            const checkAgeSql = "SELECT date FROM animals WHERE id = ?";
+            // @ts-ignore
+            const [[{ date: dateOfBirth }]] = await pool.query(checkAgeSql, [idAnimal]);
+            const serverDate = new Date(dateFrom);
+
+            if (serverDate < dateOfBirth) {
+                return res.status(400).json({ message: "Дата должна быть больше даты рождения животного." });
+            }
+
             const sql = `
                 INSERT INTO workwithanimals
                 (idPosition, idAnimal , dateFrom ,dateTo )
@@ -109,7 +125,7 @@ class WorkWithAnimalsController {
             res.status(200).json({ message: "Данные успешно отредактированы" });
         } catch (e: any) {
             console.error(e.message);
-            res.status(500).json({ error: e.message });
+            res.status(500).json(e.message);
         }
     }
 }
