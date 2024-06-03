@@ -19,6 +19,6 @@ router.use("/illnesses", illnessesRoutes);
 router.use("/zoos", zoosRoutes);
 router.use("/workWithAnimals", workWithAnimalsRoutes);
 router.use("/employees", employeesRoutes);
-router.use("report", reportRoutes);
+router.use("/report", reportRoutes);
 
 export default router;

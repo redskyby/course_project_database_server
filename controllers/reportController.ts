@@ -1,20 +1,25 @@
 import { Request, Response } from "express";
 import pool from "../db_connection";
+import {v4 as uudiv4} from "uuid";
+import fs from "fs";
+import path from "path";
+import { log } from "console";
+
 
 class ReportControlles {
     async getReport(req: Request, res: Response) {
         try {
             const { id } = req.query;
-        
+
             // Проверка наличия записи с заданным ID
             const checkSql = "SELECT * FROM Animals WHERE id = ?";
             const [checkResult] = await pool.query(checkSql, [id]);
-        
+
             if (!Array.isArray(checkResult) || checkResult.length === 0) {
                 // Если запись с заданным ID не найдена, возвращаем сообщение об ошибке
                 return res.status(404).json({ message: "Животное с указанным ID не найдено" });
             }
-        
+
             // Запрос для получения полной информации о животном
             const fullInformationSql = `
             SELECT 
@@ -51,9 +56,27 @@ class ReportControlles {
         WHERE Animals.id = ?
             `;
             const [fullInformationResult] = await pool.query(fullInformationSql, [id]);
-        
+
+            const result = JSON.stringify(fullInformationResult , null , 2)
+const fileName = `${uudiv4()}.txt`
+const filePath = path.join(__dirname , fileName);
+
+fs.writeFile(filePath, result , (err) =>{
+    if(err){
+        console.error("Ошибка при записи файла")
+        res.status(500).json({message :"Ошибка при записи файла"})
+    }
+})
+    /*res.download(filePath , fileName , (err) =>{
+        if(err){
+            console.error("Ошибка при загрузки файла")
+            res.status(500).json({message :"Ошибка при загрузки файла"})
+        }
+    })*/
+
+
             // Возвращаем полученные данные
-            res.json(fullInformationResult);
+            res.status(200).json(fullInformationResult);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
