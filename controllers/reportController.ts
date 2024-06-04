@@ -58,21 +58,26 @@ class ReportControlles {
 
             const result = JSON.stringify(fullInformationResult, null, 2);
             const fileName = `${uudiv4()}.txt`;
-            const filePath = path.join(__dirname, fileName);
+            const folderName = "C:/report"
+            const filePath = path.join(folderName, fileName);
 
+            if(!fs.existsSync(folderName)){
+                fs.mkdirSync(folderName , {recursive : true})
+            }
+            
             fs.writeFile(filePath, result, (err) => {
                 if (err) {
                     console.error("Ошибка при записи файла");
                     res.status(500).json({ message: "Ошибка при записи файла" });
                 }
-            
-            res.download(filePath , fileName , (err) =>{
-        if(err){
-            console.error("Ошибка при загрузки файла")
-            res.status(500).json({message :"Ошибка при загрузки файла"})
-        }
-    })
-})
+
+                res.download(filePath, fileName, (err) => {
+                    if (err) {
+                        console.error("Ошибка при загрузки файла");
+                        res.status(500).json({ message: "Ошибка при загрузки файла" });
+                    }
+                });
+            });
 
             // Возвращаем полученные данные
             //res.status(200).json(fullInformationResult);
