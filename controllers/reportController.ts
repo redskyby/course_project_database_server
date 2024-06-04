@@ -58,13 +58,13 @@ class ReportControlles {
 
             const result = JSON.stringify(fullInformationResult, null, 2);
             const fileName = `${uudiv4()}.txt`;
-            const folderName = "C:/report"
+            const folderName = "C:/report";
             const filePath = path.join(folderName, fileName);
 
-            if(!fs.existsSync(folderName)){
-                fs.mkdirSync(folderName , {recursive : true})
+            if (!fs.existsSync(folderName)) {
+                fs.mkdirSync(folderName, { recursive: true });
             }
-            
+
             fs.writeFile(filePath, result, (err) => {
                 if (err) {
                     console.error("Ошибка при записи файла");
