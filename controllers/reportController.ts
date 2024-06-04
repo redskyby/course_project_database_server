@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import pool from "../db_connection";
-import {v4 as uudiv4} from "uuid";
+import { v4 as uudiv4 } from "uuid";
 import fs from "fs";
 import path from "path";
 import { log } from "console";
-
 
 class ReportControlles {
     async getReport(req: Request, res: Response) {
@@ -57,26 +56,26 @@ class ReportControlles {
             `;
             const [fullInformationResult] = await pool.query(fullInformationSql, [id]);
 
-            const result = JSON.stringify(fullInformationResult , null , 2)
-const fileName = `${uudiv4()}.txt`
-const filePath = path.join(__dirname , fileName);
+            const result = JSON.stringify(fullInformationResult, null, 2);
+            const fileName = `${uudiv4()}.txt`;
+            const filePath = path.join(__dirname, fileName);
 
-fs.writeFile(filePath, result , (err) =>{
-    if(err){
-        console.error("Ошибка при записи файла")
-        res.status(500).json({message :"Ошибка при записи файла"})
-    }
-})
-    /*res.download(filePath , fileName , (err) =>{
+            fs.writeFile(filePath, result, (err) => {
+                if (err) {
+                    console.error("Ошибка при записи файла");
+                    res.status(500).json({ message: "Ошибка при записи файла" });
+                }
+            
+            res.download(filePath , fileName , (err) =>{
         if(err){
             console.error("Ошибка при загрузки файла")
             res.status(500).json({message :"Ошибка при загрузки файла"})
         }
-    })*/
-
+    })
+})
 
             // Возвращаем полученные данные
-            res.status(200).json(fullInformationResult);
+            //res.status(200).json(fullInformationResult);
         } catch (e: any) {
             console.error(e.message); // Вывод ошибки в консоль для дальнейшей диагностики
             res.status(500).json(e.message);
