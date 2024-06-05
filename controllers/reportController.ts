@@ -60,6 +60,8 @@ class ReportControlles {
             const fileName = `${uudiv4()}.txt`;
             const folderName = "C:/report";
             const filePath = path.join(folderName, fileName);
+                        /*const filePath = path.join(__dirname, fileName);*/
+
 
             if (!fs.existsSync(folderName)) {
                 fs.mkdirSync(folderName, { recursive: true });
@@ -76,6 +78,7 @@ class ReportControlles {
                         console.error("Ошибка при загрузки файла");
                         res.status(500).json({ message: "Ошибка при загрузки файла" });
                     }
+
                 });
             });
 
